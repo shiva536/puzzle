@@ -70,3 +70,11 @@ form {
   font-size: 1.5rem;
   color: $gray40;
 }
+.screen-reader {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px); /* IE 7+ only support clip without commas */
+  clip: rect(1px, 1px, 1px, 1px); /* All other browsers */
+}
