@@ -1,26 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import {
   addToReadingList,
   clearSearch,
   getAllBooks,
-  ReadingListBook,
   searchBooks
 } from '@tmo/books/data-access';
 import { FormBuilder } from '@angular/forms';
 import { Book } from '@tmo/shared/models';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { undoFromSnackBar } from '@tmo/books/data-access';
 
 @Component({
   selector: 'tmo-book-search',
   templateUrl: './book-search.component.html',
   styleUrls: ['./book-search.component.scss']
 })
-export class BookSearchComponent implements OnInit, OnDestroy {
-  books: ReadingListBook[];
-  notifier: Subject<boolean> = new Subject();
-
+export class BookSearchComponent implements OnInit {
+  books$ = this.store.pipe(select(getAllBooks));
   searchForm = this.fb.group({
     term: ''
   });
@@ -34,11 +30,7 @@ export class BookSearchComponent implements OnInit, OnDestroy {
     return this.searchForm.value.term;
   }
 
-  ngOnInit(): void {
-    this.store.select(getAllBooks).pipe(takeUntil(this.notifier)).subscribe(books => {
-      this.books = books;
-    });
-  }
+  ngOnInit(): void { }
 
   formatDate(date: void | string) {
     return date
@@ -48,6 +40,7 @@ export class BookSearchComponent implements OnInit, OnDestroy {
 
   addBookToReadingList(book: Book) {
     this.store.dispatch(addToReadingList({ book }));
+    this.store.dispatch(undoFromSnackBar({ book }));
   }
 
   searchExample() {
@@ -61,10 +54,5 @@ export class BookSearchComponent implements OnInit, OnDestroy {
     } else {
       this.store.dispatch(clearSearch());
     }
-  }
-
-  ngOnDestroy() {
-    this.notifier.next(true);
-    this.notifier.complete();
   }
 }
