@@ -1,7 +1,8 @@
 ## Code Smells
 
-1) In books-search.component.ts, subscription is not unsubscribed this may cause potential memory leaks. [Fixed]
+1) In books-search.component.ts, subscription is not unsubscribed this may cause potential memory leaks.
    This can be done in multiple ways, since reading-list.component is already using async pipe for data observable I have corrected books.component subscription in ngOnDestroy.
+   For next tasks I have used async pipe in book-search.component. [Fixed]
 2) Defined missing reducers to reading-list.reducer.ts which will also fix reading-list.reducer.spec.ts. [Fixed]
 3) I would have imposed constraints on how projects can depend on each other.  https://nx.dev/latest/angular/workspace/structure/monorepo-tags. [Improvement]
 
