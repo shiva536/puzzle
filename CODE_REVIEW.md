@@ -15,3 +15,9 @@
 2) Search mat-icon button is missing label, added label with class name screen-reader so that it is available in DOM and screen reader can access it but visually hidden for user.
    Similarly, this can be added for remove-circle icon. [Fixed for search icon]
 3) Aria-labels are missing for multiple, added for search and remove icons. [Fixed]
+
+## Task 4 Mark as read
+1) Added Checkboxes to mark book as read and disabling the checkbox once user has marked as reading finished.
+   This can be done, by using mat-icon, but I have used checkboxes since delete from reading list is already using mat-icon.
+2) Added new PUT endpoint.
+3) Used primary color for text finished reading.

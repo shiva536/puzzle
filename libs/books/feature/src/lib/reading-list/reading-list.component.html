@@ -1,21 +1,46 @@
 <ng-container *ngIf="(readingList$ | async).length > 0; else empty">
   <div class="reading-list-item" *ngFor="let b of readingList$ | async">
     <div>
+      <mat-checkbox
+        [matTooltip]="'Mark this book as finished reading'"
+        data-testing="mark-to-finish-checkbox"
+        class="example-margin"
+        *ngIf="!b?.finished"
+        (change)="markBookAsFinished(b)"
+      ></mat-checkbox>
+      <mat-checkbox
+        [matTooltip]="'Reading Finished'"
+        class="example-margin"
+        *ngIf="b?.finished"
+        checked="b?.finished"
+        [disabled]="b?.finished"
+      ></mat-checkbox>
+    </div>
+    <div>
       <img alt="" class="reading-list-item--cover" [src]="b.coverUrl" />
     </div>
     <div class="reading-list-item--details">
       <strong class="reading-list-item--details--title">{{ b.title }}</strong>
       <div class="reading-list-item--details--author">
         {{ b.authors.join(',') }}
+        <div
+          data-testing="finished-reading-details"
+          class="reading-list-finished"
+          *ngIf="b?.finished"
+        >
+          Finished reading on {{ b.finishedDate | date: 'mediumDate' }}
+        </div>
+        <br />
       </div>
     </div>
     <div>
       <button
         mat-icon-button
+        data-testing="remove-book-from-readinglist"
         color="warn"
         [attr.aria-label]="'Remove ' + b.title + ' from reading list'"
+        type="submit"
         (click)="removeFromReadingList(b)"
-        aria-label="remove-icon"
       >
         <mat-icon>remove_circle</mat-icon>
       </button>

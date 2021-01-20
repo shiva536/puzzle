@@ -34,10 +34,14 @@
 }
 
 .reading-list-item--details--title,
-.reading-list-item--details--author {
+.reading-list-item--details--author, {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.reading-list-finished {
+  color: $pink-accent;
 }
 
 .empty {
